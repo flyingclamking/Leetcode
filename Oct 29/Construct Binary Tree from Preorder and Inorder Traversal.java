@@ -14,6 +14,8 @@ public class Solution {
         
         TreeNode root = new TreeNode(preorder[preStart]);
         int index = findIndex(inorder, inStart, inEnd, preorder[preStart]);
+        
+        //--IMPORTANT--//
         root.left = helper(preorder, preStart + 1, preStart + index - inStart, inorder, inStart, index - 1);
         root.right = helper(preorder, index - inEnd + preEnd + 1, preEnd, inorder, index + 1, inEnd);
         

@@ -45,3 +45,36 @@ public class Solution {
     }
     
 }
+
+
+//HashMap Version
+
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        
+        if (head == null) {
+            return head;
+        }
+        
+        Map<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+        RandomListNode curr = head;
+        
+        while (curr != null) {
+            RandomListNode temp = new RandomListNode(curr.label);
+            map.put(curr, temp);
+            curr = curr.next;
+        }
+        
+        curr = head;
+        while (curr != null) {
+            RandomListNode temp = map.get(curr);
+            temp.next = map.get(curr.next);
+            if (curr.random != null) {
+                temp.random = map.get(curr.random);
+            }
+            curr = curr.next;
+        }
+        
+        return map.get(head);
+    }
+}

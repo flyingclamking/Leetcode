@@ -35,3 +35,48 @@ public class Solution {
     }
     
 }
+
+
+//Top-Down DP : Recursion + Memo
+public class Solution {
+    
+    private Map<String, ArrayList<String>> memo = new HashMap<String, ArrayList<String>>();
+    
+    public List<String> wordBreak(String s, Set<String> dict) {
+        
+        if (s == null || dict == null) {
+            return null;
+        }
+        
+        return helper(s, dict);
+    }
+    
+    private ArrayList<String> helper(String s, Set<String> dict) {
+        if (memo.containsKey(s)) {
+            return memo.get(s);
+        }
+        
+        ArrayList<String> result = new ArrayList<String>();
+        int length = s.length();
+        if (length <= 0) {
+            return result;
+        }
+        
+        for (int i = 1; i <= length; i++) {
+            String prefix = s.substring(0, i);
+            if (dict.contains(prefix)) {
+                if (i == length) {
+                    result.add(prefix);
+                } else {
+                    ArrayList<String> temp = helper(s.substring(i), dict);
+                    for (String curr : temp) {
+                        result.add(prefix + " " + curr);
+                    }
+                }
+            }
+        }
+        
+        memo.put(s, result);
+        return result;
+    }
+}
